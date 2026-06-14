@@ -39,10 +39,8 @@ export default function Home() {
             ].map(([icon, label, href]) => (
               <a key={href} href={href}>
                 <div
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors duration-150"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors duration-150 hover:bg-[var(--accent-light)]"
                   style={{ color: "var(--ink-soft)" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "var(--accent-light)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
                 >
                   <span>{icon}</span>
                   <span className="text-sm">{label}</span>
