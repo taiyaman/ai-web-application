@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const tools = [
   { href: "/blog",      icon: "✍️", label: "ブログ記事生成",  sub: "Blog Writer"     },
@@ -12,17 +13,17 @@ const tools = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
-  return (
-    <aside
-      className="flex flex-col w-60 shrink-0 min-h-screen"
-      style={{
-        background: "var(--sidebar-bg)",
-        borderRight: "1px solid var(--sidebar-border)",
-      }}
-    >
+  // ページ遷移時にドロワーを閉じる
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const navContent = (
+    <>
       {/* Logo */}
-      <Link href="/">
+      <Link href="/" onClick={() => setOpen(false)}>
         <div
           className="px-5 py-5"
           style={{ borderBottom: "1px solid var(--sidebar-border)" }}
@@ -106,6 +107,81 @@ export default function Sidebar() {
       >
         AI Writing Tools v1.0
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* デスクトップ: 固定サイドバー */}
+      <aside
+        className="hidden md:flex flex-col w-60 shrink-0 min-h-screen"
+        style={{
+          background: "var(--sidebar-bg)",
+          borderRight: "1px solid var(--sidebar-border)",
+        }}
+      >
+        {navContent}
+      </aside>
+
+      {/* モバイル: ヘッダーバー */}
+      <div
+        className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center px-4 h-14"
+        style={{
+          background: "var(--sidebar-bg)",
+          borderBottom: "1px solid var(--sidebar-border)",
+        }}
+      >
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="メニューを開く"
+          className="p-2 rounded-lg"
+          style={{ color: "var(--ink)" }}
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <rect y="3" width="20" height="2" rx="1" />
+            <rect y="9" width="20" height="2" rx="1" />
+            <rect y="15" width="20" height="2" rx="1" />
+          </svg>
+        </button>
+        <div className="flex items-center gap-2 ml-3">
+          <div className="w-4 h-4 rounded" style={{ background: "var(--accent)" }} />
+          <span className="font-display text-sm" style={{ color: "var(--ink)", fontWeight: 400 }}>
+            Writing Studio
+          </span>
+        </div>
+      </div>
+
+      {/* モバイル: オーバーレイ */}
+      {open && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black/40"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* モバイル: ドロワー */}
+      <aside
+        className={`md:hidden fixed top-0 left-0 z-50 flex flex-col w-72 h-full transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
+        style={{
+          background: "var(--sidebar-bg)",
+          borderRight: "1px solid var(--sidebar-border)",
+        }}
+      >
+        <div className="flex items-center justify-end px-4 h-14" style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="メニューを閉じる"
+            className="p-2 rounded-lg"
+            style={{ color: "var(--ink)" }}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+              <line x1="1" y1="1" x2="17" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <line x1="17" y1="1" x2="1" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+        {navContent}
+      </aside>
+    </>
   );
 }

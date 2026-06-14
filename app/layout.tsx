@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="ja" className="h-full">
       <body className="h-full flex" style={{ background: "var(--bg)" }}>
         <Sidebar />
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto pt-14 md:pt-0">
           {children}
         </div>
       </body>
