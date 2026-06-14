@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg: #FAFAF8;
+  --surface: #FFFFFF;
+  --sidebar-bg: #F4F1EC;
+  --sidebar-border: #E8E3DA;
+  --ink: #1A1714;
+  --ink-soft: #3D3834;
+  --muted: #8C8278;
+  --accent: #C84B31;
+  --accent-light: #FBE9E4;
+  --border: #E5E0D8;
+  --border-dark: #D4CEC5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--sidebar-bg); }
+::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 2px; }
+
+.font-display { font-family: 'Cormorant Garamond', serif; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.animate-fade-up { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+.ink-input {
+  width: 100%;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.9rem;
+  padding: 0.7rem 0.9rem;
+  outline: none;
+  border-radius: 6px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ink-input::placeholder { color: var(--muted); }
+.ink-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+.ink-input option { background: #fff; color: var(--ink); }
+
+.accent-line { width: 2rem; height: 2px; background: var(--accent); }
